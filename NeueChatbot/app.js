@@ -29,61 +29,6 @@ var bot = new builder.UniversalBot(connector, function (session) {
 var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL);
 bot.recognizer(recognizer);
 
-bot.dialog('SearchHotels', [
-    dialogeLeistung.searchHotel,
-    function (session, results) {
-        var destination = results.response;
-
-        var message = 'Looking for hotels';
-        if (session.dialogData.searchType === 'airport') {
-            message += ' near %s airport...';
-        } else {
-            message += ' in %s...';
-        }
-
-        session.send(message, destination);
-
-        // Async search
-        Store
-            .searchHotels(destination)
-            .then(function (hotels) {
-                // args
-                session.send('I found %d hotels:', hotels.length);
-
-                var message = new builder.Message()
-                    .attachmentLayout(builder.AttachmentLayout.carousel)
-                    .attachments(hotels.map(hotelAsAttachment));
-
-                session.send(message);
-
-                // End
-                session.endDialog();
-            });
-    }
-]).triggerAction({
-    matches: 'SearchHotels',
-    onInterrupted: function (session) {
-        session.send('Please provide a destination');
-    }
-});
-
-bot.dialog('ShowHotelsReviews', function (session, args) {
-    // retrieve hotel name from matched entities
-    var hotelEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Hotel');
-    if (hotelEntity) {
-        session.send('Looking for reviews of \'%s\'...', hotelEntity.entity);
-        Store.searchHotelReviews(hotelEntity.entity)
-            .then(function (reviews) {
-                var message = new builder.Message()
-                    .attachmentLayout(builder.AttachmentLayout.carousel)
-                    .attachments(reviews.map(reviewAsAttachment));
-                session.endDialog(message);
-            });
-    }
-}).triggerAction({
-    matches: 'ShowHotelsReviews'
-});
-
 // Intent Help
 bot.dialog('Help', dialogeLeistung.help).triggerAction({
     matches: 'Help'
@@ -99,7 +44,6 @@ bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
 bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).triggerAction({
     matches: 'RechnungEinReichen'
 });
-
 
 // Spell Check
 if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {
