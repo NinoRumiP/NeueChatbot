@@ -6,6 +6,7 @@ var restify = require('restify');
 var Store = require('./store');
 var spellService = require('./spell-service');
 var dialogeLeistung = require('./dialogeLeistung');
+var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -83,9 +84,22 @@ bot.dialog('ShowHotelsReviews', function (session, args) {
     matches: 'ShowHotelsReviews'
 });
 
+// Intent Help
 bot.dialog('Help', dialogeLeistung.help).triggerAction({
     matches: 'Help'
 });
+
+// Intent Leistungsabfrage
+bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
+    matches: 'Leistungsabfrage'
+});
+
+
+// Intent RechnungEinReichen
+bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).triggerAction({
+    matches: 'RechnungEinReichen'
+});
+
 
 // Spell Check
 if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {

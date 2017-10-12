@@ -21,5 +21,9 @@
 
     help: function (session) {
         session.endDialog('Hi! Try asking me things like \'search hotels in Seattle\', \'search hotels near LAX airport\' or \'show me the reviews of The Bot Resort\'');
+    },
+
+    leistungsabfrage: function (session) {
+        session.endDialog('Es geht um Leistungsabfrage');
     }
 }

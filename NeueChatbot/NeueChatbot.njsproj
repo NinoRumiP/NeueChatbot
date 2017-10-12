@@ -33,6 +33,9 @@
     <Compile Include="dialogeLeistung.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="dialogeRechnungEinreichen.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="server.js" />
     <Content Include=".env" />
     <Content Include="azuredeploy.json" />
