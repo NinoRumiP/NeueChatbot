@@ -5,6 +5,7 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var Store = require('./store');
 var spellService = require('./spell-service');
+var dialogeLeistung = require('./dialogeLeistung');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -28,25 +29,7 @@ var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL);
 bot.recognizer(recognizer);
 
 bot.dialog('SearchHotels', [
-    function (session, args, next) {
-        session.send('Welcome to the Hotels finder! We are analyzing your message: \'%s\'', session.message.text);
-
-        // try extracting entities
-        var cityEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'builtin.geography.city');
-        var airportEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'AirportCode');
-        if (cityEntity) {
-            // city entity detected, continue to next step
-            session.dialogData.searchType = 'city';
-            next({ response: cityEntity.entity });
-        } else if (airportEntity) {
-            // airport entity detected, continue to next step
-            session.dialogData.searchType = 'airport';
-            next({ response: airportEntity.entity });
-        } else {
-            // no entities detected, ask user for a destination
-            builder.Prompts.text(session, 'Please enter your destination');
-        }
-    },
+    dialogeLeistung.searchHotel,
     function (session, results) {
         var destination = results.response;
 
@@ -100,9 +83,7 @@ bot.dialog('ShowHotelsReviews', function (session, args) {
     matches: 'ShowHotelsReviews'
 });
 
-bot.dialog('Help', function (session) {
-    session.endDialog('Hi! Try asking me things like \'search hotels in Seattle\', \'search hotels near LAX airport\' or \'show me the reviews of The Bot Resort\'');
-}).triggerAction({
+bot.dialog('Help', dialogeLeistung.help).triggerAction({
     matches: 'Help'
 });
 
