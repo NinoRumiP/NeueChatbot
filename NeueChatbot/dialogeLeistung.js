@@ -3,8 +3,6 @@ var builder = require('botbuilder');
 
 var fetchUrl = require("fetch").fetchUrl;
 
-var backendRestService = require('./backendRestService');
-
 module.exports = {
     help: function (session) {
         session.endDialog('Hi! Wie kann ich dir helfen?');
@@ -19,7 +17,7 @@ module.exports = {
 
             console.log(urlFitness.toString());
 
-            fetchUrl(urlFitness.toString(), function (error, meta, body) {
+            fetchUrl(urlFitness, function (error, meta, body) {
                 console.log(body.toString());
                 var obj = JSON.parse(body);
                 console.log(obj.certified);
