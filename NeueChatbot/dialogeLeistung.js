@@ -10,6 +10,10 @@ module.exports = {
         // try extracting entities
         var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter');
 
-        session.endDialog('Wo möchten Sie ein Fitnessabo abschliessen' + fitnessCenterEntity.entity.text);
+        var answer = "Wo möchten Sie ein Fitnessabo abschliessen";
+
+        answer += fitnessCenterEntity.entity.toString();
+
+        session.endDialog(answer.toString());
     }
 }
