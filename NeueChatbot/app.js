@@ -3,10 +3,13 @@ require('dotenv-extended').load();
 
 var builder = require('botbuilder');
 var restify = require('restify');
+var Promise = require('bluebird');
+var request = require('request-promise').defaults({ encoding: null });
 var Store = require('./store');
 var spellService = require('./spell-service');
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
+var dialogSuche = require('./dialogSuche');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -21,7 +24,30 @@ var connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen());
 
 var bot = new builder.UniversalBot(connector, function (session) {
-    session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
+    var msg = session.message;
+    if (msg.attachments.length) {
+
+        // Message with attachment, proceed to download it.
+        // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
+        var attachment = msg.attachments[0];
+        var fileDownload = checkRequiresToken(msg)
+            ? requestWithToken(attachment.contentUrl)
+            : request(attachment.contentUrl);
+
+        fileDownload.then(
+            function (response) {
+
+                // Send reply with attachment type & size
+                var reply = new builder.Message(session)
+                    .text('Rechnung von Fitness Abo vom Typ %s bekommen. Wir werden diese bearbeiten und uns bei dir melden', attachment.contentType, response.length);
+                session.send(reply);
+
+            }).catch(function (err) {
+                console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
+            });
+    } else {
+        session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
+    }
 });
 
 // You can provide your own model by specifing the 'LUIS_MODEL_URL' environment variable
@@ -37,6 +63,11 @@ bot.dialog('Help', dialogeLeistung.help).triggerAction({
 // Intent Leistungsabfrage
 bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
     matches: 'Leistungsabfrage'
+});
+
+// Intent Leistungsabfrage
+bot.dialog('FitnessSuche', dialogSuche.suche).triggerAction({
+    matches: 'FitnessSuche'
 });
 
 
@@ -83,3 +114,24 @@ function reviewAsAttachment(review) {
         .text(review.text)
         .images([new builder.CardImage().url(review.image)]);
 }
+
+
+// Request file with Authentication Header
+var requestWithToken = function (url) {
+    return obtainToken().then(function (token) {
+        return request({
+            url: url,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/octet-stream'
+            }
+        });
+    });
+};
+
+// Promise for obtaining JWT Token (requested once)
+var obtainToken = Promise.promisify(connector.getAccessToken.bind(connector));
+
+var checkRequiresToken = function (message) {
+    return message.source === 'skype' || message.source === 'msteams';
+};

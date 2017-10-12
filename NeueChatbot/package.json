@@ -11,7 +11,10 @@
     "botbuilder",
     "bots",
     "chatbots",
-    "botbuilder-samples"
+    "botbuilder-samples",
+    "bluebird",
+    "request",
+    "request-promise"
   ],
   "bugs": {
     "url": "https://github.com/Microsoft/BotBuilder-Samples/issues"
@@ -26,6 +29,7 @@
     "dotenv-extended": "^1.0.4",
     "fetch": "^1.1.0",
     "request": "^2.79.0",
+    "request-promise": "^4.2.2",
     "restify": "^4.3.0"
   }
 }
