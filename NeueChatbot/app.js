@@ -44,7 +44,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
             });
     } else {
-        session.send('Sorry, ich verstehe \'%s\'. Tippe \'Hilfe\' wenn du unterstützung brauchst.', session.message.text);
+        session.send('Sorry, ich verstehe \'%s\'. Tippe \'Hilfe\' wenn du weitere Infos willst.', session.message.text);
     }
 });
 
@@ -75,7 +75,7 @@ bot.dialog('Help', function (session) {
     matches: 'Help'
     });
 
-// Intent Hello
+// Intent Hallo
 bot.dialog('Hello', function (session) {
     session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
 }).triggerAction({
