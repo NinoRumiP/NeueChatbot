@@ -3,7 +3,7 @@ var builder = require('botbuilder');
 
 module.exports = {
 
-    leistungsabfrage: function (session, args, next) {
+    suche: function (session, args, next) {
         // try extracting entities
         var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
 

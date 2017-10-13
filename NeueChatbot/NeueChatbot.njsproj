@@ -40,6 +40,7 @@
     <Compile Include="server.js" />
     <Content Include=".env" />
     <Content Include="azuredeploy.json" />
+    <Content Include="default.htm" />
     <Content Include="LuisBot.json" />
     <None Include="NeueChatbotYuLiCSS - Web Deploy.pubxml" />
     <Content Include="Web.config" />

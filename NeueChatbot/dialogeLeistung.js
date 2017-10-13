@@ -32,6 +32,9 @@ module.exports = {
                 }
             });
         } else {
+            session.beginDialog('askForFitnessCenter');
+
+
             builder.Prompts.text(session, 'Wo möchten Sie Fitness Abo abschliessen');
         }
     }
