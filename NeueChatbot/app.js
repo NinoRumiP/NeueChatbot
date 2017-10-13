@@ -61,12 +61,15 @@ bot.dialog('Help', function (session) {
 });
 
 // Intent Leistungsabfrage
-bot.dialog('Leistungsabfrage', [dialogeLeistung.leistungsabfrage, dialogeLeistung.Versicherungstyp]).triggerAction({
+bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
     matches: 'Leistungsabfrage'
 });
 
 // Intent Leistungsabfrage. Dialog FitnessZentrumFragen
 bot.dialog('FitnessZentrumFragen', dialogeLeistung.FitnessZentrumFragen);
+
+// Intent Leistungsabfrage. Dialog Versicherungstyp
+bot.dialog('Versicherungstyp', dialogeLeistung.Versicherungstyp);
 
 // Intent FitnessSuche
 bot.dialog('FitnessSuche', dialogSuche.suche).triggerAction({
