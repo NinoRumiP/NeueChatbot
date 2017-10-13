@@ -4,7 +4,6 @@ var builder = require('botbuilder');
 var fetchUrl = require("fetch").fetchUrl;
 
 module.exports = {
-
     leistungsabfrage: function (session, args, next) {
         // try extracting entities
         var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter');
@@ -52,7 +51,7 @@ module.exports = {
         }
     ],
 
-    Versicherungstyp: function (session) {
-        session.endDialog('Welche Versicherung hast du?');
+    Versicherungstyp: function (session, args, next) {
+        builder.Prompts.text(session, 'Welche Versicherung hast du?');
     }
 }
