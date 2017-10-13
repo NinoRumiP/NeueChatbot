@@ -55,7 +55,7 @@ bot.recognizer(recognizer);
 
 // Intent Help
 bot.dialog('Help', function (session) {
-    session.endDialog('Hi! Wie kann ich dir helfen?');
+    session.endDialog('Ich kann dir Auskunft darüber ob du für dein Fitness Abo Geld von uns zugute hast. Frage einfach ob du für dein Fintess etwas bezahlt bekommst. Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen. Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen');
 }).triggerAction({
     matches: 'Help'
 });
