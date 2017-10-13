@@ -55,9 +55,16 @@ bot.recognizer(recognizer);
 
 // Intent Help
 bot.dialog('Help', function (session) {
-    session.endDialog('Ich kann dir Auskunft darüber ob du für dein Fitness Abo Geld von uns zugute hast. Frage einfach ob du für dein Fintess etwas bezahlt bekommst. Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen. Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen');
+    session.endDialog('Ich kann abklären ob du für dein Fitness Abo Geld von uns zugute hast. Frage einfach ob du für dein Fintess etwas bezahlt bekommst. Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen. Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen');
 }).triggerAction({
     matches: 'Help'
+    });
+
+// Intent Hallo
+bot.dialog('Hallo', function (session) {
+    session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
+}).triggerAction({
+    matches: 'Hallo'
 });
 
 // Intent Leistungsabfrage
