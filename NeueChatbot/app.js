@@ -54,17 +54,32 @@ var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL);
 bot.recognizer(recognizer);
 
 // Intent Help
+bot.dialog('Login',
+    [
+        function (session, args, next) {
+            builder.Prompts.choice(session, "Wählen Sie einen Testbenutzer aus", "Lukas|Hans|Barbara", { listStyle: builder.ListStyle.button });
+        },
+        function (session, results) {
+            session.conversationData['Username'] = results.response;
+            session.endDialog("Sie sind jetzt " + results.response.entity);
+        }
+    ]
+).triggerAction({
+    matches: /^Login$/i
+});
+
+// Intent Help
 bot.dialog('Help', function (session) {
     session.endDialog('Ich kann abklären ob du für dein Fitness Abo Geld von uns zugute hast. Frage einfach ob du für dein Fintess etwas bezahlt bekommst. Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen. Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen');
 }).triggerAction({
     matches: 'Help'
     });
 
-// Intent Hallo
-bot.dialog('Hallo', function (session) {
+// Intent Hello
+bot.dialog('Hello', function (session) {
     session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
 }).triggerAction({
-    matches: 'Hallo'
+    matches: 'Hello'
 });
 
 // Intent Leistungsabfrage
