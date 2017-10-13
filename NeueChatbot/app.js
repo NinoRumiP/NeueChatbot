@@ -83,27 +83,6 @@ bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).t
     matches: 'RechnungEinReichen'
 });
 
-// Helpers
-function hotelAsAttachment(hotel) {
-    return new builder.HeroCard()
-        .title(hotel.name)
-        .subtitle('%d stars. %d reviews. From $%d per night.', hotel.rating, hotel.numberOfReviews, hotel.priceStarting)
-        .images([new builder.CardImage().url(hotel.image)])
-        .buttons([
-            new builder.CardAction()
-                .title('More details')
-                .type('openUrl')
-                .value('https://www.bing.com/search?q=hotels+in+' + encodeURIComponent(hotel.location))
-        ]);
-}
-
-function reviewAsAttachment(review) {
-    return new builder.ThumbnailCard()
-        .title(review.title)
-        .text(review.text)
-        .images([new builder.CardImage().url(review.image)]);
-}
-
 
 // Request file with Authentication Header
 var requestWithToken = function (url) {
