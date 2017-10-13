@@ -37,14 +37,14 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
                 // Send reply with attachment type & size
                 var reply = new builder.Message(session)
-                    .text('Rechnung von Fitness Abo vom Typ %s bekommen. Wir werden diese bearbeiten und uns bei dir melden', attachment.contentType, response.length);
+                    .text('Rechnung von Fitness Abo vom Typ %s bekommen. Wir werden diese bearbeiten und uns bei dir melden', attachment.contentType);
                 session.send(reply);
 
             }).catch(function (err) {
                 console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
             });
     } else {
-        session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
+        session.send('Sorry, ich verstehe \'%s\'. Tippe \'Hilfe\' wenn du unterstützung brauchst.', session.message.text);
     }
 });
 
