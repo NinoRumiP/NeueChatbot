@@ -1,18 +1,24 @@
 ﻿
 var builder = require('botbuilder');
+var fetch = require("fetch").fetch;
+
+
 
 module.exports = {
 
-    leistungsabfrage: function (session, args, next) {
+    suche: function (session, args, next) {
         // try extracting entities
         var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
 
-        fetch('/api/rest/abc')
+        var sendMsg =  function (s, i, o) {
+            session.send('%s, %s', s.name, s.url);
+        }
+
+        fetch('http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-            })
-            .catch(err => {
+                data.forEach(sendMsg);
+                }).catch(err => {
                 console.error('An error ocurred', err);
             });
 
