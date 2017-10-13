@@ -68,7 +68,7 @@ bot.dialog('Hallo', function (session) {
 });
 
 // Intent Leistungsabfrage
-bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
+bot.dialog('Leistungsabfrage', dialogeLeistung.Leistungsabfrage).triggerAction({
     matches: 'Leistungsabfrage'
 });
 

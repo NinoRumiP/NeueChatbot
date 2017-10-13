@@ -4,7 +4,7 @@ var builder = require('botbuilder');
 var fetchUrl = require("fetch").fetchUrl;
 
 module.exports = {
-    leistungsabfrage: function (session, args, next) {
+    Leistungsabfrage: function (session, args, next) {
         var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter');
 
         if (fitnessCenterEntity) {
