@@ -12,6 +12,8 @@ module.exports = {
         // try extracting entities
         var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter');
 
+        console.log('Fitness Leistung abfragen');
+
         if (fitnessCenterEntity) {
             var urlFitness = "http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/" + fitnessCenterEntity.entity.toString();
 
@@ -32,7 +34,17 @@ module.exports = {
                 }
             });
         } else {
-            builder.Prompts.text(session, 'Wo möchten Sie Fitness Abo abschliessen');
+            console.log('Fitness Zentrum wird nicht identifiziert');
+
+            session.beginDialog('FitnessZentrumFragen');
         }
+    },
+
+    FitnessZentrumFragen: function (session) {
+        session.endDialog('Wo möchten Sie Fitness Abo abschliessen');
+    },
+
+    Versicherungstyp: function (session) {
+        session.endDialog('Welche Versicherung hast du?');
     }
 }

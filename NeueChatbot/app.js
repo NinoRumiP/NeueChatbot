@@ -5,8 +5,6 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var Promise = require('bluebird');
 var request = require('request-promise').defaults({ encoding: null });
-var Store = require('./store');
-var spellService = require('./spell-service');
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 var dialogSuche = require('./dialogSuche');
@@ -65,34 +63,25 @@ bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
     matches: 'Leistungsabfrage'
 });
 
-// Intent Leistungsabfrage
+// Intent Leistungsabfrage. Dialog FitnessZentrumFragen
+bot.dialog('FitnessZentrumFragen', dialogeLeistung.FitnessZentrumFragen).triggerAction({
+    matches: 'FitnessZentrumFragen'
+});
+
+// Intent Leistungsabfrage. Dialog Versicherungstyp
+bot.dialog('Versicherungstyp', dialogeLeistung.Versicherungstyp).triggerAction({
+    matches: 'Versicherungstyp'
+});
+
+// Intent FitnessSuche
 bot.dialog('FitnessSuche', dialogSuche.suche).triggerAction({
     matches: 'FitnessSuche'
 });
-
 
 // Intent RechnungEinReichen
 bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).triggerAction({
     matches: 'RechnungEinReichen'
 });
-
-// Spell Check
-if (process.env.IS_SPELL_CORRECTION_ENABLED === 'true') {
-    bot.use({
-        botbuilder: function (session, next) {
-            spellService
-                .getCorrectedText(session.message.text)
-                .then(function (text) {
-                    session.message.text = text;
-                    next();
-                })
-                .catch(function (error) {
-                    console.error(error);
-                    next();
-                });
-        }
-    });
-}
 
 // Helpers
 function hotelAsAttachment(hotel) {
