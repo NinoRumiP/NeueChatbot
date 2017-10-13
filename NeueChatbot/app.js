@@ -63,11 +63,20 @@ bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
     matches: 'Leistungsabfrage'
 });
 
-// Intent Leistungsabfrage
+// Intent Leistungsabfrage. Dialog FitnessZentrumFragen
+bot.dialog('FitnessZentrumFragen', dialogeLeistung.FitnessZentrumFragen).triggerAction({
+    matches: 'FitnessZentrumFragen'
+});
+
+// Intent Leistungsabfrage. Dialog Versicherungstyp
+bot.dialog('Versicherungstyp', dialogeLeistung.Versicherungstyp).triggerAction({
+    matches: 'Versicherungstyp'
+});
+
+// Intent FitnessSuche
 bot.dialog('FitnessSuche', dialogSuche.suche).triggerAction({
     matches: 'FitnessSuche'
 });
-
 
 // Intent RechnungEinReichen
 bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).triggerAction({
