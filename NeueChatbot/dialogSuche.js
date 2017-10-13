@@ -1,7 +1,6 @@
 ﻿
 var builder = require('botbuilder');
-var fetch = require("fetch").fetch;
-
+var fetch = require('node-fetch');
 
 
 module.exports = {
@@ -11,13 +10,13 @@ module.exports = {
         var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
 
         var sendMsg =  function (s, i, o) {
-            session.send('%s, %s', s.name, s.url);
+            session.send('%s, %s', s.name, s.website);
         }
 
-        fetch('http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/')
+        fetch('http://35.189.74.56/fCenters/search/findByLocationContainingIgnoreCase?location=' + locationEntity.entity.toString())
             .then(response => response.json())
             .then(data => {
-                data.forEach(sendMsg);
+                data._embedded.fCenters.forEach(sendMsg);
                 }).catch(err => {
                 console.error('An error ocurred', err);
             });
