@@ -6,13 +6,11 @@ var fetchUrl = require("fetch").fetchUrl;
 module.exports = {
     leistungsabfrage: function (session, args, next) {
         var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter');
-        console.log('Fitness Leistung abfragen');
 
         if (fitnessCenterEntity) {
             session.conversationData['FitnessCenter'] = fitnessCenterEntity.entity;
             checkCert(session)
         } else {
-            console.log('Fitness Zentrum wird nicht identifiziert');
             session.beginDialog('FitnessZentrumFragen');
         }
     },
