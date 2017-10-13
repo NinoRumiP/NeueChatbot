@@ -21,10 +21,7 @@ module.exports = {
         },
         function (session, results) {
             if (results.response) {
-                session.userData.fitnessCenter = results.response;
                 session.conversationData['FitnessCenter'] = results.response;
-                session.dialogData.fitnessCenter = results.response;
-                session.save();
             }
 
             session.beginDialog('Versicherungstyp');
@@ -37,10 +34,8 @@ module.exports = {
         },
         function (session, results) {
             session.conversationData['Versicherungstyp'] = results.response;
-
             checkCertAndInsure(session)
-
-            session.endDialogWithResult(results);
+            session.endDialog();
         }
     ]
 }
@@ -48,12 +43,8 @@ module.exports = {
 function checkCertAndInsure(session) {
     var restURL = "http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/" + session.conversationData['FitnessCenter'];
 
-    console.log(restURL.toString());
-
     fetchUrl(restURL, function (error, meta, body) {
-        console.log(body.toString());
         var obj = JSON.parse(body);
-        console.log(obj.certified);
 
         if (!JSON.parse(String(obj.certified).toLowerCase())) {
             session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum nicht zertifziert ist.");
@@ -68,12 +59,8 @@ function checkCertAndInsure(session) {
 function checkCert(session) {
     var restURL = "http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/" + session.conversationData['FitnessCenter'];
 
-    console.log(restURL.toString());
-
     fetchUrl(restURL, function (error, meta, body) {
-        console.log(body.toString());
         var obj = JSON.parse(body);
-        console.log(obj.certified);
 
         if (!JSON.parse(String(obj.certified).toLowerCase())) {
             session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum nicht zertifziert ist.");
