@@ -54,7 +54,9 @@ var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL);
 bot.recognizer(recognizer);
 
 // Intent Help
-bot.dialog('Help', dialogeLeistung.help).triggerAction({
+bot.dialog('Help', function (session) {
+    session.endDialog('Hi! Wie kann ich dir helfen?');
+}).triggerAction({
     matches: 'Help'
 });
 
@@ -64,9 +66,8 @@ bot.dialog('Leistungsabfrage', dialogeLeistung.leistungsabfrage).triggerAction({
 });
 
 // Intent Leistungsabfrage. Dialog FitnessZentrumFragen
-bot.dialog('FitnessZentrumFragen', dialogeLeistung.FitnessZentrumFragen).triggerAction({
-    matches: 'FitnessZentrumFragen'
-});
+bot.dialog('FitnessZentrumFragen', dialogeLeistung.FitnessZentrumFragen);
+
 
 // Intent Leistungsabfrage. Dialog Versicherungstyp
 bot.dialog('Versicherungstyp', dialogeLeistung.Versicherungstyp).triggerAction({
