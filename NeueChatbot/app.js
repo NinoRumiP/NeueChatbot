@@ -103,7 +103,6 @@ bot.dialog('RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen).t
     matches: 'RechnungEinReichen'
 });
 
-
 // Request file with Authentication Header
 var requestWithToken = function (url) {
     return obtainToken().then(function (token) {
