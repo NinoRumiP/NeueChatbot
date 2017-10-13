@@ -4,9 +4,6 @@ var builder = require('botbuilder');
 var fetchUrl = require("fetch").fetchUrl;
 
 module.exports = {
-    help: function (session) {
-        session.endDialog('Hi! Wie kann ich dir helfen?');
-    },    
 
     leistungsabfrage: function (session, args, next) {
         // try extracting entities
@@ -15,6 +12,8 @@ module.exports = {
         console.log('Fitness Leistung abfragen');
 
         if (fitnessCenterEntity) {
+            session.conversationData['FitnessCenter'] = fitnessCenterEntity.entity;
+
             var urlFitness = "http://chatbotsandbox.getsandbox.com/v1.0/fitnesses/" + fitnessCenterEntity.entity.toString();
 
             console.log(urlFitness.toString());
@@ -40,9 +39,18 @@ module.exports = {
         }
     },
 
-    FitnessZentrumFragen: function (session) {
-        session.endDialog('Wo möchten Sie Fitness Abo abschliessen');
-    },
+    FitnessZentrumFragen: [
+        function (session) {
+            builder.Prompts.text(session, "Wo ist Ihr Fitnesszentrum (z.B. Migro Fitnesspark)");
+        },
+        function (session, results) {
+            if (!results.response) {
+                session.conversationData['FitnessCenter'] = results.response;
+            }
+
+            session.endDialogWithResult(results);
+        }
+    ],
 
     Versicherungstyp: function (session) {
         session.endDialog('Welche Versicherung hast du?');
