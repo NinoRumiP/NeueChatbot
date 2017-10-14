@@ -4,7 +4,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>NeueChatbot</Name>
     <RootNamespace>NeueChatbot</RootNamespace>
-    <NameOfLastUsedPublishProfile>CSSChatbotPrototyp - Web Deploy</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>NeueChatbot20171013115459 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -37,14 +37,9 @@
     <Compile Include="dialogeRechnungEinreichen.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="server.js" />
     <Content Include=".env" />
     <Content Include="azuredeploy.json" />
-    <None Include="CSSChatbotPrototyp - Web Deploy.pubxml" />
     <Content Include="default.htm" />
-    <Content Include="LuisBot.json" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>

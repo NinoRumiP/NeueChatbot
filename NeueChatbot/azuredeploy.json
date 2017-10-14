@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName": {
-      "defaultValue": "BotBuilder-Samples",
+      "defaultValue": "NeueChatbotCSS",
       "type": "string"
     },
     "hostingPlanName": {
@@ -39,7 +39,7 @@
     },
     "Project": {
       "type": "string",
-      "defaultValue": "Node/intelligence-LUIS"
+      "defaultValue": "NeueChatbotCSS"
     },
     "WEBSITE_NODE_DEFAULT_VERSION": {
       "type": "string",
@@ -50,21 +50,6 @@
     },
     "MICROSOFT_APP_PASSWORD": {
       "type": "string"
-    },
-    "LUIS_MODEL_URL": {
-      "type": "string",
-    },
-    "BING_SPELL_CHECK_API_KEY": {
-      "type": "string",
-      "defaultValue": "8ae90e80bc4346d59c0f07529dadaa4e"
-    },
-    "IS_SPELL_CORRECTION_ENABLED": {
-      "type": "string",
-      "allowedValues": [
-        "true",
-        "false"
-      ],
-      "defaultValue": "false"
     }
   },
   "resources": [
@@ -120,18 +105,6 @@
               {
                 "name": "MICROSOFT_APP_PASSWORD",
                 "value": "[parameters('MICROSOFT_APP_PASSWORD')]"
-              },
-              {
-                "name": "LUIS_MODEL_URL",
-                "value": "[parameters('LUIS_MODEL_URL')]"
-              },
-              {
-                "name": "BING_SPELL_CHECK_API_KEY",
-                "value": "[parameters('BING_SPELL_CHECK_API_KEY')]"
-              },
-              {
-                "name": "IS_SPELL_CORRECTION_ENABLED",
-                "value": "[parameters('IS_SPELL_CORRECTION_ENABLED')]"
               }
             ]
           }

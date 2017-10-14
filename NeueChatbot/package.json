@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Bot Builder Sample - LUIS",
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "author": "Microsoft Corp.",
   "license": "MIT",

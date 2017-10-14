@@ -50,7 +50,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
 // You can provide your own model by specifing the 'LUIS_MODEL_URL' environment variable
 // This Url can be obtained by uploading or creating your model from the LUIS portal: https://www.luis.ai/
-var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL);
+var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/38cf11ae-17f5-474e-ade7-6bd911c6135d?subscription-key=70686d23fae0437c8c214d8ec23c6d62&timezoneOffset=0&verbose=true&q=');
 bot.recognizer(recognizer);
 
 // Intent Help
