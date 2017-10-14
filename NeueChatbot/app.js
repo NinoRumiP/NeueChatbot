@@ -4,6 +4,7 @@ require('dotenv-extended').load();
 var builder = require('botbuilder');
 var restify = require('restify');
 var Promise = require('bluebird');
+var fs = require("fs");
 var request = require('request-promise').defaults({ encoding: null });
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
@@ -20,6 +21,17 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 server.post('/api/messages', connector.listen());
+
+server.get('/', respond);
+
+function respond(req, res, next) {
+    fs.readFile("./default.htm", function (err, data) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(data);
+        res.end();
+    });
+    next();
+}
 
 var bot = new builder.UniversalBot(connector, function (session) {
     var msg = session.message;
