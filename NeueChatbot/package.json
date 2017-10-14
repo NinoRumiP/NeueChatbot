@@ -1,11 +1,11 @@
 {
-  "name": "botbuilder-sample-luis",
+  "name": "neuchatbot-css-prototype",
   "version": "1.0.0",
-  "description": "Bot Builder Sample - LUIS",
+  "description": "NeueChatbot",
   "scripts": {
     "start": "node app.js"
   },
-  "author": "Microsoft Corp.",
+  "author": "CSS",
   "license": "MIT",
   "keywords": [
     "botbuilder",
@@ -17,11 +17,11 @@
     "request-promise"
   ],
   "bugs": {
-    "url": "https://github.com/Microsoft/BotBuilder-Samples/issues"
+    "url": "https://github.com/NinoRumiP/NeueChatbot/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/BotBuilder-Samples.git"
+    "url": "https://github.com/NinoRumiP/NeueChatbot.git"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
