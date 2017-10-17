@@ -9,6 +9,7 @@ var request = require('request-promise').defaults({ encoding: null });
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 var dialogSuche = require('./dialogSuche');
+var fetchUrl = require("fetch").fetchUrl;
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -72,8 +73,19 @@ bot.dialog('Login',
             builder.Prompts.choice(session, "Wählen Sie einen Testbenutzer aus", "Lukas|Hans|Barbara", { listStyle: builder.ListStyle.button });
         },
         function (session, results) {
-            session.conversationData['Username'] = results.response;
-            session.endDialog("Sie sind jetzt " + results.response.entity);
+            session.conversationData['Username'] = results.response.entity;
+
+            var restURL = "http://chatbotsandbox.getsandbox.com/v1.0/product/" + session.conversationData['Username'];
+
+            console.log('URL:', restURL);
+
+            fetchUrl(restURL, function (error, meta, body) {
+                var obj = JSON.parse(body);
+
+                console.log('Error downloading attachment:', String(obj.type));
+
+                session.endDialog("Hallo " + session.conversationData['Username'] + "! Du hast" + String(obj.type) + " und Produkt " + String(obj.product));
+            });
         }
     ]
 ).triggerAction({
