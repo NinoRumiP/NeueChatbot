@@ -84,7 +84,7 @@ bot.dialog('Login',
 
                 console.log('Error downloading attachment:', String(obj.type));
 
-                session.endDialog("Hallo " + session.conversationData['Username'] + "! Du hast" + String(obj.type) + " und Produkt " + String(obj.product));
+                session.endDialog("Hallo " + session.conversationData['Username'] + "! Du hast " + String(obj.type) + " und den Produkt " + String(obj.product));
             });
         }
     ]
