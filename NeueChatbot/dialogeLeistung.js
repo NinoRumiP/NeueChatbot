@@ -7,11 +7,15 @@ var querystring = require('querystring');
 
 module.exports = {
     Leistungsabfrage: function (session, args, next) {
-        var fitnessCenterEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenterList');
+        var entityList = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenterList');  // Not machine learned
+        var entitySimple = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter'); // Machine learned
 
-        if (fitnessCenterEntity) {
-            session.conversationData['FitnessCenter'] = fitnessCenterEntity.resolution.values[0];
-            checkCert(session)
+        if (entityList) {
+            session.conversationData['FitnessCenter'] = entityList.resolution.values[0];
+            checkCertAndInsure(session)
+        } else if (entitySimple) {
+            session.conversationData['FitnessCenter'] = entitySimple.entity;
+            checkCertAndInsure(session)
         } else {
             session.beginDialog('FitnessZentrumFragen');
         }
@@ -24,9 +28,8 @@ module.exports = {
         function (session, results) {
             if (results.response) {
                 session.conversationData['FitnessCenter'] = results.response;
+                extractEntity(session);
             }
-
-            session.beginDialog('Versicherungstyp');
         }
     ],
 
@@ -46,6 +49,25 @@ module.exports = {
     ]
 }
 
+function extractEntity(session) {
+    var luisURL = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/38cf11ae-17f5-474e-ade7-6bd911c6135d?subscription-key=70686d23fae0437c8c214d8ec23c6d62&timezoneOffset=0&verbose=true&q=" + "Bezahlt ihr mein abo von " + session.conversationData['FitnessCenter'];
+
+    fetchUrl(luisURL, function (error, meta, body) {
+        var obj = JSON.parse(body);
+
+        var entityList = builder.EntityRecognizer.findEntity(obj.entities, 'FitnessCenterList');  // Not machine learned
+        var entitySimple = builder.EntityRecognizer.findEntity(obj.entities, 'FitnessCenter'); // Machine learned
+
+        if (entityList) {
+            session.conversationData['FitnessCenter'] = entityList.resolution.values[0];
+        } else if (entitySimple) {
+            session.conversationData['FitnessCenter'] = entitySimple.entity;
+        } 
+
+        checkCertAndInsure(session)
+    });
+}
+
 function checkCertAndInsure(session) {
     var restURL = "http://35.189.74.56/fCenters/search/findByName?name=" + querystring.escape(session.conversationData['FitnessCenter']);
 
@@ -53,7 +75,9 @@ function checkCertAndInsure(session) {
         var obj = JSON.parse(body);
 
         if (obj._embedded.fCenters.length == 0) {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum nicht zertifziert ist.");
+            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum " + session.conversationData['FitnessCenter'] + " nicht zertifziert ist.");
+        } else if (typeof session.conversationData['UserInsureType'] == 'undefined') {
+            session.beginDialog('Versicherungstyp');
         } else if (session.conversationData['UserInsureType'] == 'Grundversicherung') {
             session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Sie keine Zusatzversicherung haben");
         } else if (session.conversationData['UserProductType'] == 'Balance' || session.conversationData['UserProductType'] == 'Premium') {

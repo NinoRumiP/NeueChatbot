@@ -85,7 +85,7 @@ bot.dialog('Login',
                 session.conversationData['UserProductType'] = String(obj.product);
                 session.conversationData['UserDiscount'] = String(obj.discount);
 
-                session.endDialog("Hallo " + session.conversationData['Username'] + "! Du hast " + String(obj.type) + " und den Produkt " + String(obj.product));
+                session.endDialog("Hallo " + session.conversationData['Username'] + "! Du hast " + String(obj.type) + " und das Produkt " + String(obj.product));
             });
         }
     ]
