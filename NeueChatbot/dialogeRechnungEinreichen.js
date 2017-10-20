@@ -1,5 +1,11 @@
-﻿module.exports = {
-    rechnungEinreichen: function (session) {
-        session.endDialog('Sie können die Rechnung fürs Fitnes direkt hier im Chat posten, wir werden diese dann umgehend bearbeiten');
+﻿var builder = require('botbuilder');
+var request = require('request-promise').defaults({ encoding: null });
+
+module.exports = {
+    rechnungEinreichen: function (session, args, next) {
+         session.beginDialog('RechnungVerarbeiten');
     }
 }
+
+
+

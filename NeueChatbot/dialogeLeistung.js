@@ -1,8 +1,5 @@
-﻿
-var builder = require('botbuilder');
-
+﻿var builder = require('botbuilder');
 var fetchUrl = require("fetch").fetchUrl;
-
 var querystring = require('querystring');
 
 module.exports = {
