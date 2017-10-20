@@ -50,7 +50,7 @@ module.exports = {
 }
 
 function extractEntity(session) {
-    var luisURL = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/38cf11ae-17f5-474e-ade7-6bd911c6135d?subscription-key=70686d23fae0437c8c214d8ec23c6d62&timezoneOffset=0&verbose=true&q=" + "Bezahlt ihr mein abo von " + session.conversationData['FitnessCenter'];
+    var luisURL = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/38cf11ae-17f5-474e-ade7-6bd911c6135d?subscription-key=70686d23fae0437c8c214d8ec23c6d62&timezoneOffset=0&verbose=true&q=" + "Bezahlt ihr mein abo von " + querystring.escape(session.conversationData['FitnessCenter']);
 
     fetchUrl(luisURL, function (error, meta, body) {
         var obj = JSON.parse(body);
@@ -84,21 +84,6 @@ function checkCertAndInsure(session) {
             session.send("Wir übernehmen " + session.conversationData['UserDiscount'] + " CHF pro Kalenderjahr für Ihr Fitnessabo");
         } else {
             session.send("Wir übernehmen ein Teil von Ihrem Fitnessabo");
-        }
-    });
-}
-
-function checkCert(session) {
-    var restURL = "http://35.189.74.56/fCenters/search/findByName?name=" + querystring.escape(session.conversationData['FitnessCenter']);
-
-    fetchUrl(restURL, function (error, meta, body) {
-        var obj = JSON.parse(body);
-
-        if (obj._embedded.fCenters.length == 0) {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum " + session.conversationData['FitnessCenter'] + " nicht zertifziert ist.");
-            session.endDialog();
-        } else {
-            session.beginDialog('Versicherungstyp');
         }
     });
 }
