@@ -33,7 +33,7 @@ module.exports = {
     Versicherungstyp: [
         function (session, args, next) {
             if (typeof session.conversationData['Username'] == "undefined") {
-                builder.Prompts.choice(session, "Welche Versicherungsprodukte hast du?", "Grundversicherung|Zusatzversicherung", { listStyle: builder.ListStyle.button });
+                builder.Prompts.choice(session, "Welche Versicherungen haben Sie?", "Grundversicherung|Zusatzversicherung", { listStyle: builder.ListStyle.button });
             } else {
                 checkCertAndInsure(session)
             }
