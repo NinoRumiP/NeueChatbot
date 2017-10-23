@@ -1,7 +1,5 @@
-﻿
-var builder = require('botbuilder');
+﻿var builder = require('botbuilder');
 var fetch = require('node-fetch');
-
 
 module.exports = {
 
@@ -24,6 +22,6 @@ module.exports = {
                 });
         } else {
             session.endDialog('Ich habe leider nicht verstanden wo sie ein Fitness Center suchen');
-        }
+        } 
     }
 }
