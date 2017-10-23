@@ -7,8 +7,10 @@ module.exports = {
 
     suche: function (session, args, next) {
         // try extracting entities
-        var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
-
+        var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'LocList');
+        if (!locationEntity) {
+            locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
+        }
         var sendMsg =  function (s, i, o) {
             session.send('%s, %s', s.name, s.website);
         }
@@ -23,7 +25,5 @@ module.exports = {
         } else {
             session.endDialog('Ich habe leider nicht verstanden wo sie ein Fitness Center suchen');
         }
-
-        
     }
 }
