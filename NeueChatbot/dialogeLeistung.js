@@ -72,15 +72,15 @@ function checkCertAndInsure(session) {
         var obj = JSON.parse(body);
 
         if (obj._embedded.fCenters.length == 0) {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum " + session.conversationData['FitnessCenter'] + " nicht zertifziert ist.");
+            session.endDialog("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum \*\*" + session.conversationData['FitnessCenter'] + "\*\* nicht zertifziert ist.");
         } else if (typeof session.conversationData['UserInsureType'] == 'undefined') {
             session.beginDialog('Versicherungstyp');
         } else if (session.conversationData['UserInsureType'] == 'Grundversicherung') {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Sie keine Zusatzversicherung haben");
+            session.endDialog("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Sie keine Zusatzversicherung haben");
         } else if (session.conversationData['UserProductType'] == 'Balance' || session.conversationData['UserProductType'] == 'Premium') {
-            session.send("Wir übernehmen " + session.conversationData['UserDiscount'] + " CHF pro Kalenderjahr für Ihr Fitnessabo");
+            session.endDialog("Wir übernehmen " + session.conversationData['UserDiscount'] + " CHF pro Kalenderjahr für Ihr Fitnessabo");
         } else {
-            session.send("Wir übernehmen ein Teil von Ihrem Fitnessabo");
+            session.endDialog("Wir übernehmen ein Teil von Ihrem Fitnessabo");
         }
     });
 }
