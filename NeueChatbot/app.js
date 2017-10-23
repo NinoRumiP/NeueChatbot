@@ -8,6 +8,7 @@ var Promise = require('bluebird');
 var fs = require("fs");
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
+var dialogeStatusabfrage = require('./dialogeStatusabfrage');
 var dialogSuche = require('./dialogSuche');
 var login = require('./login');
 var fetchUrl = require("fetch").fetchUrl;
@@ -41,13 +42,18 @@ const intents = new builder.IntentDialog({
     ]
 });
 
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector, {
+    localizerSettings: {
+        defaultLocale: "de"
+    }
+});
 
 intents.matches('Hello', 'Hello');
 intents.matches('Leistungsabfrage', 'Leistungsabfrage');
 intents.matches('Help', 'Help');
 intents.matches('FitnessSuche', 'FitnessSuche');
 intents.matches('RechnungEinReichen', 'RechnungEinReichen');
+intents.matches('Statusabfrage', 'Statusabfrage');
 
 // Root Dialog
 bot.dialog('/', intents);
@@ -69,6 +75,13 @@ bot.dialog('Help', function (session) {
 // Intent Hello
 bot.dialog('Hello', function (session) {
     session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
+});
+
+// Intent Statusabfrage
+bot.dialog('Statusabfrage',
+    dialogeStatusabfrage.Statusabfrage
+).beginDialogAction({
+    matches: 'Statusabfrage'
 });
 
 // Intent Leistungsabfrage

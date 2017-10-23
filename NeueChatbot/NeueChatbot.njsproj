@@ -30,6 +30,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="dialogeStatusabfrage.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="dialogSuche.js" />
     <Compile Include="dialogeLeistung.js">
       <SubType>Code</SubType>
