@@ -17,7 +17,7 @@ module.exports = {
             session.send(fitnessCenterListeResponseChat);
         }
         if (locationEntity) {
-            fetch('http://35.189.74.56/fCenters/search/findByLocationContainingIgnoreCase?location=' + locationEntity.entity.toString())
+            fetch(encodeURI('http://35.189.74.56/fCenters/search/findByLocationContainingIgnoreCase?location=' + locationEntity.entity.toString()))
                 .then(response => response.json())
                 .then(data => {
                     sendMsg(data._embedded.fCenters);
