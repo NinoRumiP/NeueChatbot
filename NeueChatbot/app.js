@@ -6,7 +6,6 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var Promise = require('bluebird');
 var fs = require("fs");
-var utf8 = require("utf8")
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 var dialogeStatusabfrage = require('./dialogeStatusabfrage');
@@ -75,11 +74,11 @@ bot.dialog('Help', function (session) {
         '* Falls du schon eine Rechnung hochgeladen hast kann ich dir den Status des Prozesses nennen');
 }).triggerAction({
     matches: 'Help'
- });
+});
 
 // Intent Hello
 bot.dialog('Hello', function (session) {
-    session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
+    session.endDialog("Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe");
 });
 
 // Intent Statusabfrage
