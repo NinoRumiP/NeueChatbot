@@ -9,10 +9,10 @@ module.exports = {
 
         if (entityList) {
             session.conversationData['FitnessCenter'] = entityList.resolution.values[0];
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
         } else if (entitySimple) {
             session.conversationData['FitnessCenter'] = entitySimple.entity;
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
         } else {
             session.beginDialog('FitnessZentrumFragen');
         }
@@ -35,12 +35,12 @@ module.exports = {
             if (typeof session.conversationData['Username'] == "undefined") {
                 builder.Prompts.choice(session, "Welche Versicherungen haben Sie?", "Grundversicherung|Zusatzversicherung", { listStyle: builder.ListStyle.button });
             } else {
-                checkCertAndInsure(session)
+                checkCertAndInsure(session);
             }
         },
         function (session, results) {
             session.conversationData['UserInsureType'] = results.response.entity;
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
             session.endDialog();
         }
     ]
@@ -61,7 +61,7 @@ function extractEntity(session) {
             session.conversationData['FitnessCenter'] = entitySimple.entity;
         } 
 
-        checkCertAndInsure(session)
+        checkCertAndInsure(session);
     });
 }
 
