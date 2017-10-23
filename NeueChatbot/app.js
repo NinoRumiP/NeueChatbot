@@ -6,6 +6,7 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var Promise = require('bluebird');
 var fs = require("fs");
+var utf8 = require("utf8")
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 var dialogeStatusabfrage = require('./dialogeStatusabfrage');
@@ -106,16 +107,7 @@ bot.dialog(
 
 // Intent RechnungEinReichen
 bot.dialog(
-    'RechnungEinReichen', dialogeRechnungEinreichen.rechnungEinreichen
-).beginDialogAction({
-    matches: 'RechnungEinReichen'
-});
-
-bot.dialog('RechnungVerarbeiten', [
-    function (session) {
-        builder.Prompts.attachment(session, 'Sie können die Rechnung fürs Fitnes direkt hier im Chat posten, wir werden diese dann umgehend bearbeiten');
-    },
-    function (session, results) {
+    'RechnungEinReichen', [dialogeRechnungEinreichen.Step1Login, dialogeRechnungEinreichen.Step2RechnungHochladen, function (session, results) {
         var msg = session.message;
         if (msg.attachments.length) {
 
@@ -144,8 +136,10 @@ bot.dialog('RechnungVerarbeiten', [
         }
 
         session.endDialog();
-    }
-]);
+    }]
+).beginDialogAction({
+    matches: 'RechnungEinReichen'
+});
 
 // Request file with Authentication Header
 var requestWithToken = function (url) {

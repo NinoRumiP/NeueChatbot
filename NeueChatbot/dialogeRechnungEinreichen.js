@@ -1,9 +1,24 @@
 ﻿var builder = require('botbuilder');
-var request = require('request-promise').defaults({ encoding: null });
+var fetchUrl = require("fetch").fetchUrl;
 
 module.exports = {
-    rechnungEinreichen: function (session, args, next) {
-         session.beginDialog('RechnungVerarbeiten');
+    Step1Login: function (session, args, next) {
+        builder.Prompts.choice(session, "Sie müssen zuerst einloggen, um Ihre Rechnung hochzuladen", "Lukas|Hans|Barbara", { listStyle: builder.ListStyle.button });
+    },
+    Step2RechnungHochladen: function(session, results) {
+        session.conversationData['Username'] = results.response.entity;
+
+        var restURL = "http://chatbotsandbox.getsandbox.com/v1.0/product/" + session.conversationData['Username'];
+
+        fetchUrl(restURL, function (error, meta, body) {
+            var obj = JSON.parse(body);
+
+            session.conversationData['UserInsureType'] = String(obj.type);
+            session.conversationData['UserProductType'] = String(obj.product);
+            session.conversationData['UserDiscount'] = String(obj.discount);
+
+            builder.Prompts.attachment(session, "Hallo " + session.conversationData['Username'] + "! Die Rechnung fürs Fitness kann direkt hier im Chat postet werden, wir werden diese dann umgehend bearbeiten");
+        });
     }
 }
 
