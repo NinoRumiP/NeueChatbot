@@ -87,6 +87,8 @@ bot.dialog('Help', function (session) {
 // Intent Hello
 bot.dialog('Hello', function (session) {
     session.endDialog("Hallo, ich bin der CSS Fitness Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe");
+}).beginDialogAction({
+    matches: 'Hello'
 });
 
 // Intent Statusabfrage
