@@ -9,14 +9,18 @@ module.exports = {
         if (!locationEntity) {
             locationEntity = builder.EntityRecognizer.findEntity(args.entities, 'Location');
         }
-        var sendMsg =  function (s, i, o) {
-            session.send('%s, %s', s.name, s.website);
+        var sendMsg = function (fCenters) {
+            var fitnessCenterListeResponseChat = 'Ich habe folgende Fitness Center für dich gefunden: \n\r';
+            for (let fCenter of fCenters) {
+                fitnessCenterListeResponseChat += "* " + fCenter.name + ", " + fCenter.website + "\r\n";
+            }
+            session.send(fitnessCenterListeResponseChat);
         }
         if (locationEntity) {
             fetch('http://35.189.74.56/fCenters/search/findByLocationContainingIgnoreCase?location=' + locationEntity.entity.toString())
                 .then(response => response.json())
                 .then(data => {
-                    data._embedded.fCenters.forEach(sendMsg);
+                    sendMsg(data._embedded.fCenters);
                 }).catch(err => {
                     console.error('An error ocurred', err);
                 });

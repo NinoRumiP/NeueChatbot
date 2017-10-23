@@ -67,7 +67,7 @@ bot.dialog(
 
 // Intent Help
 bot.dialog('Help', function (session) {
-    session.endDialog('Ich kann dir bei folfenden Themen helfen: \r\n'
+    session.endDialog('Ich kann dir bei folfenden Themen helfen: \r\n' + 
         '* Ich kann abklären ob du für dein Fitness Abo Geld von uns erhälst.\r\n' + 
         '* Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen.\r\n' + 
         '* Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen\r\n' +
@@ -78,7 +78,7 @@ bot.dialog('Help', function (session) {
 
 // Intent Hello
 bot.dialog('Hello', function (session) {
-    session.endDialog("Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe");
+    session.endDialog("Hallo, ich bin der CSS Fitness Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe");
 });
 
 // Intent Statusabfrage
