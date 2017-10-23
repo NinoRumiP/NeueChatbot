@@ -31,7 +31,6 @@
     "node-fetch": "^1.7.3",
     "request": "^2.79.0",
     "request-promise": "^4.2.2",
-    "restify": "^4.3.0",
-    "utf8": "^2.1.2"
+    "restify": "^4.3.0"
   }
 }

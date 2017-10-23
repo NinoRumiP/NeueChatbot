@@ -6,7 +6,6 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var Promise = require('bluebird');
 var fs = require("fs");
-var utf8 = require("utf8")
 var dialogeLeistung = require('./dialogeLeistung');
 var dialogeRechnungEinreichen = require('./dialogeRechnungEinreichen');
 var dialogeStatusabfrage = require('./dialogeStatusabfrage');
