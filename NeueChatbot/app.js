@@ -1,4 +1,4 @@
-// This loads the environment variables from the .env file
+ï»¿// This loads the environment variables from the .env file
 require('dotenv-extended').load();
 
 var request = require('request-promise').defaults({ encoding: null });
@@ -68,14 +68,18 @@ bot.dialog(
 
 // Intent Help
 bot.dialog('Help', function (session) {
-    session.endDialog('Ich kann abklären ob du für dein Fitness Abo Geld von uns zugute hast. Frage einfach ob du für dein Fintess etwas bezahlt bekommst. Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen. Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen');
+    session.endDialog('Ich kann dir bei folfenden Themen helfen: \r\n'
+        '* Ich kann abklÃ¤ren ob du fÃ¼r dein Fitness Abo Geld von uns erhÃ¤lst.\r\n' + 
+        '* Wenn du ein neues Fitness suchst kann ich dir auch dabei helfen.\r\n' + 
+        '* Wenn du dann von uns Geld zugute hast, kannst du direkt hier im Chat die Rechnung hochladen\r\n' +
+        '* Falls du schon eine Rechnung hochgeladen hast kann ich dir den Status des Prozesses nennen');
 }).triggerAction({
     matches: 'Help'
  });
 
 // Intent Hello
 bot.dialog('Hello', function (session) {
-    session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, für mehr Infos tippe Hilfe');
+    session.endDialog('Hallo, ich bin der CSS Fitness Center Bot, ich beantworte dir alle Fragen zum Thema zuschuss zum Fitness Abo, fÃ¼r mehr Infos tippe Hilfe');
 });
 
 // Intent Statusabfrage
