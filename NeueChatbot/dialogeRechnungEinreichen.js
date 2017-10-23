@@ -3,7 +3,7 @@ var fetchUrl = require("fetch").fetchUrl;
 
 module.exports = {
     Step1Login: function (session, args, next) {
-        builder.Prompts.choice(session, "Sie müssen zuerst einloggen, um Ihre Rechnung hochzuladen", "Lukas|Hans|Barbara", { listStyle: builder.ListStyle.button });
+        builder.Prompts.choice(session, "Sie müssen sich zuerst einloggen, um Ihre Rechnung hochzuladen. Bitte wählen Sie einen Testbenuzter aus?", "Lukas|Hans|Barbara", { listStyle: builder.ListStyle.button });
     },
     Step2RechnungHochladen: function(session, results) {
         session.conversationData['Username'] = results.response.entity;

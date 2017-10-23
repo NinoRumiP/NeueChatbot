@@ -54,6 +54,7 @@ intents.matches('Help', 'Help');
 intents.matches('FitnessSuche', 'FitnessSuche');
 intents.matches('RechnungEinReichen', 'RechnungEinReichen');
 intents.matches('Statusabfrage', 'Statusabfrage');
+intents.matches('None', 'None');
 
 // Root Dialog
 bot.dialog('/', intents);
@@ -63,6 +64,13 @@ bot.dialog(
     'Login', login.Login
 ).triggerAction({
     matches: /^Login$/i
+});
+
+// Intent None
+bot.dialog('None', function (session) {
+    session.endDialog('Ich habe Sie leider nicht verstanden. Es tut mir leid ☹️');
+}).triggerAction({
+    matches: 'None'
 });
 
 // Intent Help
