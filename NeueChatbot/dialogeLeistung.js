@@ -4,8 +4,8 @@ var querystring = require('querystring');
 
 module.exports = {
     Leistungsabfrage: function (session, args, next) {
-        var entityList = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenterList');  // Not machine learned
-        var entitySimple = builder.EntityRecognizer.findEntity(args.intent.entities, 'FitnessCenter'); // Machine learned
+        var entityList = builder.EntityRecognizer.findEntity(args.entities, 'FitnessCenterList');  // Not machine learned
+        var entitySimple = builder.EntityRecognizer.findEntity(args.entities, 'FitnessCenter'); // Machine learned
 
         if (entityList) {
             session.conversationData['FitnessCenter'] = entityList.resolution.values[0];
