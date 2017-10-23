@@ -5,9 +5,9 @@ module.exports = {
 
     suche: function (session, args, next) {
         // try extracting entities
-        var locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'LocList');
+        var locationEntity = builder.EntityRecognizer.findEntity(args.entities, 'LocList');
         if (!locationEntity) {
-            locationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Location');
+            locationEntity = builder.EntityRecognizer.findEntity(args.entities, 'Location');
         }
         var sendMsg =  function (s, i, o) {
             session.send('%s, %s', s.name, s.website);
