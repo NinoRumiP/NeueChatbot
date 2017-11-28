@@ -9,10 +9,10 @@ module.exports = {
 
         if (entityList) {
             session.conversationData['FitnessCenter'] = entityList.resolution.values[0];
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
         } else if (entitySimple) {
             session.conversationData['FitnessCenter'] = entitySimple.entity;
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
         } else {
             session.beginDialog('FitnessZentrumFragen');
         }
@@ -35,12 +35,12 @@ module.exports = {
             if (typeof session.conversationData['Username'] == "undefined") {
                 builder.Prompts.choice(session, "Welche Versicherungen haben Sie?", "Grundversicherung|Zusatzversicherung", { listStyle: builder.ListStyle.button });
             } else {
-                checkCertAndInsure(session)
+                checkCertAndInsure(session);
             }
         },
         function (session, results) {
             session.conversationData['UserInsureType'] = results.response.entity;
-            checkCertAndInsure(session)
+            checkCertAndInsure(session);
             session.endDialog();
         }
     ]
@@ -61,7 +61,7 @@ function extractEntity(session) {
             session.conversationData['FitnessCenter'] = entitySimple.entity;
         } 
 
-        checkCertAndInsure(session)
+        checkCertAndInsure(session);
     });
 }
 
@@ -72,15 +72,15 @@ function checkCertAndInsure(session) {
         var obj = JSON.parse(body);
 
         if (obj._embedded.fCenters.length == 0) {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum " + session.conversationData['FitnessCenter'] + " nicht zertifziert ist.");
+            session.endDialog("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Ihr Fitnesszentrum \*\*" + session.conversationData['FitnessCenter'] + "\*\* nicht zertifziert ist.");
         } else if (typeof session.conversationData['UserInsureType'] == 'undefined') {
             session.beginDialog('Versicherungstyp');
         } else if (session.conversationData['UserInsureType'] == 'Grundversicherung') {
-            session.send("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Sie keine Zusatzversicherung haben");
+            session.endDialog("Tut mir leid! Ihr Fitnessabo wird nicht bezahlt, weil Sie keine Zusatzversicherung haben");
         } else if (session.conversationData['UserProductType'] == 'Balance' || session.conversationData['UserProductType'] == 'Premium') {
-            session.send("Wir übernehmen " + session.conversationData['UserDiscount'] + " CHF pro Kalenderjahr für Ihr Fitnessabo");
+            session.endDialog("Wir übernehmen " + session.conversationData['UserDiscount'] + " CHF pro Kalenderjahr für Ihr Fitnessabo");
         } else {
-            session.send("Wir übernehmen ein Teil von Ihrem Fitnessabo");
+            session.endDialog("Wir übernehmen ein Teil von Ihrem Fitnessabo");
         }
     });
 }
